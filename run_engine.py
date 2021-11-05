@@ -39,18 +39,24 @@ sheet = workbook.active
 stream_path="/home/muneeb/gem5/processing/load/stream/"
 spec_path="/home/muneeb/gem5/processing/load/spec/"
 
-directory_contents = os.listdir(stream_path)
+path = spec_path # name of folder to execute 
+
+directory_contents = os.listdir(path)
+#directory_contents = os.listdir(stream_path)
+app_count = 0 ; 
+max_col = 5 ; 
 for dir1 in directory_contents:
-	load_path= stream_path+dir1
+	load_path= path+dir1
         
 	gem5= "/home/muneeb/gem5/build/X86/gem5.opt "
 	config= sys.argv[1]+" " 
 	subprocess.call( gem5 + config+ load_path, shell=True)
 
+	app_offset = app_count * max_col;
 
+	app_count+=1
 
-
-
+	
 
 	states = open("./m5out/stats.txt", "r")
 
@@ -60,19 +66,19 @@ for dir1 in directory_contents:
 
 	line_list=[]
 	offset=1
-	load_description=  "Description about the load"
-	sheet.cell(row=offset, column=1).value = load_description
+	load_description= load_path
+	sheet.cell(row=offset, column=1 + app_offset).value = load_description
 	offset += 1;
 	label= " gem5 state parameter Name"
 	comment=" Parameter Description"
 	data1 = "value 1"
 	data2 = "value 2"
 	data3 = "value 3"
-	sheet.cell(row=offset, column=1).value = label
-	sheet.cell(row=offset, column=2).value = data1
-	sheet.cell(row=offset, column=3).value = data2
-	sheet.cell(row=offset, column=4).value = data3
-	sheet.cell(row=offset, column=5).value = comment
+	sheet.cell(row=offset, column=1+ app_offset).value = label
+	sheet.cell(row=offset, column=2 +app_offset).value = data1
+	sheet.cell(row=offset, column=3 + app_offset).value = data2
+	sheet.cell(row=offset, column=4 + app_offset).value = data3
+	sheet.cell(row=offset, column=5 + app_offset).value = comment
 	row_count=offset;
 	for line in Lines:
 		line=line.strip()
@@ -83,10 +89,10 @@ for dir1 in directory_contents:
 			for sublist in line_list:
 				col_count +=1;
 				if col_count <  list_element_count: 
-					sheet.cell(row=row_count, column=col_count).value = sublist
+					sheet.cell(row=row_count, column=col_count+app_offset).value = sublist
 				else:
 					col_count=5
-					sheet.cell(row=row_count, column=col_count).value = sublist
+					sheet.cell(row=row_count, column=col_count + app_offset).value = sublist
 
 			col_count =0;
 
