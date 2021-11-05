@@ -922,7 +922,7 @@
                     "name": "workload",
                     "path": "system.cpu.workload",
                     "cmd": [
-                        "/home/muneeb/gem5/tests/test-progs/hello/bin/x86/linux/hello"
+                        "/home/muneeb/gem5/processing/load/stream/stream"
                     ],
                     "cwd": "/home/muneeb/gem5/processing",
                     "drivers": [],
